@@ -107,7 +107,7 @@ get '/' do
     long = params[:long]
     @results = sort_by_proximity sensors, lat, long
   end
-  erb :index
+  erb :map
 end
 
 get '/sensor/:id' do
