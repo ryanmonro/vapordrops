@@ -1,14 +1,13 @@
-<h1>Vapordrops!</h1>
 
 <% @results.each do |result| %>
 
+<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+<p><%= result.sensorloc %><br>
+  
+Location: <%= result.latitude %>,  <%= result.longitude %><br>
 
-<p><%= result.featurename %><br>
-  <% coordinates = result.coordinates.coordinates %>
-Location: <%= coordinates[0] %>,  <%= coordinates[1] %><br>
-<%= result.nbbikes %> bikes available
 </p>
-
+</div>
 
 
 <% end %>
