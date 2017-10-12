@@ -1,10 +1,11 @@
 
-<% @results.each do |result| %>
+<% @results.each do |r| %>
+<% result = r[1] %>
 
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
-<p><%= result.sensorloc %><br>
+<p><%= result.name %> - <%= result.average %><br>
   
-Location: <%= result.latitude %>,  <%= result.longitude %><br>
+Location: <%= result.lat %>,  <%= result.long  %><br>
 
 </p>
 </div>
