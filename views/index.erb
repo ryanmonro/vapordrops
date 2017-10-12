@@ -1,1 +1,14 @@
 <h1>Vapordrops!</h1>
+
+<% @results.each do |result| %>
+
+
+<p><%= result.featurename %><br>
+  <% coordinates = result.coordinates.coordinates %>
+Location: <%= coordinates[0] %>,  <%= coordinates[1] %><br>
+<%= result.nbbikes %> bikes available
+</p>
+
+
+
+<% end %>
