@@ -5,10 +5,6 @@ require 'soda/client'
 require 'sinatra/reloader'
 require_relative 'models/sensor'
 
-# General Assembly location for testing
-$ga_lat = '-37.818624299999996'
-$ga_long = '144.9593399'
-
 def melbourne_soda address, query
   client = SODA::Client.new({:domain => "data.melbourne.vic.gov.au"})
   client.get(address, query)
@@ -23,14 +19,28 @@ def get_locations
   arr
 end
 
-def get_traffic time, day, month, year
-  locations = get_locations
-  results = melbourne_soda("mxb8-wn4w", {:$limit => 5000, 
+def fetch_sensor_for_hdmy sensor_id, time, day, month, year
+  melbourne_soda("mxb8-wn4w", {:$limit => 5000, 
+    :sensor_id => sensor_id,
     :year => year,
     :time => time,
     :day => day,
     :month => month
     })
+end
+
+def fetch_all_sensors_for_hdmy time, day, month, year
+  melbourne_soda("mxb8-wn4w", {:$limit => 5000, 
+    :year => year,
+    :time => time,
+    :day => day,
+    :month => month
+    })
+end
+
+def get_traffic time, day, month, year
+  locations = get_locations
+  results = fetch_all_sensors_for_hdmy time, day, month, year
   sensors = {}
   results.each do |result|
     id = result.sensor_id.to_i
@@ -50,6 +60,10 @@ def get_traffic time, day, month, year
   sensors
 end
 
+def get_sensor id, day, month, year
+  locations = get_locations
+end
+
 def sort_by_average sensors
   sorted_results = sensors.sort_by { |k, v| v.average.to_i }.reverse
   return sorted_results
@@ -65,6 +79,9 @@ def proximity lat1, long1, lat2, long2
 end
 
 get '/' do
+  # General Assembly location for testing
+  ga_lat = '-37.818624299999996'
+  ga_long = '144.9593399'
   time = 19
   day = "Monday"
   month = "August"
@@ -83,16 +100,21 @@ get '/' do
   end
   sensors = get_traffic time, day, month, year
   @results = sort_by_average sensors
+  # long = $ga_long
+  # lat = $ga_lat
   if params[:lat] && params[:long]
     lat = params[:lat]
     long = params[:long]
-    # lat = $ga_lat
-    # long = $ga_long
     @results = sort_by_proximity sensors, lat, long
   end
   erb :index
 end
 
+get '/sensor/:id' do
+  
+
+
+end
 
 
 
