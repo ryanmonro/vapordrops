@@ -5,6 +5,10 @@ require 'soda/client'
 require 'sinatra/reloader'
 require_relative 'models/sensor'
 
+# General Assembly location for testing
+$ga_lat = '-37.818624299999996'
+$ga_long = '144.9593399'
+
 def melbourne_soda address, query
   client = SODA::Client.new({:domain => "data.melbourne.vic.gov.au"})
   client.get(address, query)
@@ -17,17 +21,16 @@ def get_locations
     arr[result.sensorid.to_i] = result
   end
   arr
-
 end
 
-def get_traffic time, locations
+def get_traffic time, day, month, year
+  locations = get_locations
   results = melbourne_soda("mxb8-wn4w", {:$limit => 5000, 
-    :year => 2017,
+    :year => year,
     :time => time,
-    :day => "Wednesday",
-    :month => "August"
+    :day => day,
+    :month => month
     })
-  # data structure. We need id, name, array of traffics, average traffic. Fuck
   sensors = {}
   results.each do |result|
     id = result.sensor_id.to_i
@@ -44,19 +47,49 @@ def get_traffic time, locations
       end
     end
   end
+  sensors
+end
+
+def sort_by_average sensors
   sorted_results = sensors.sort_by { |k, v| v.average.to_i }.reverse
   return sorted_results
 end
 
+def sort_by_proximity sensors, lat, long
+  sorted_results = sensors.sort_by { |k, v| proximity v.lat.to_f, v.long.to_f, lat.to_f, long.to_f }
+  return sorted_results
+end
 
+def proximity lat1, long1, lat2, long2
+  Math.sqrt((lat1 - lat2)**2 + (long1 - long2)**2)
+end
 
 get '/' do
   time = 19
+  day = "Monday"
+  month = "August"
+  year = 2017
   if params[:time]
     time = params[:time]
   end
-  locations = get_locations
-  @results = get_traffic time, locations
+  if params[:day]
+    day = params[:day]
+  end
+  if params[:month]
+    month = params[:month]
+  end
+  if params[:year]
+    year = params[:year]
+  end
+  sensors = get_traffic time, day, month, year
+  @results = sort_by_average sensors
+  if params[:lat] && params[:long]
+    lat = params[:lat]
+    long = params[:long]
+    # lat = $ga_lat
+    # long = $ga_long
+    @results = sort_by_proximity sensors, lat, long
+  end
   erb :index
 end
 
