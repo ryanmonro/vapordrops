@@ -108,7 +108,7 @@ get '/' do
   @results = sort_by_average sensors
   # long = $ga_long
   # lat = $ga_lat
-  if params[:lat] && params[:long]
+  if params[:lat] && params[:long] && params[:lat] != "" && params[:long] != ""
     @lat = params[:lat]
     @long = params[:long]
     @results = sort_by_proximity sensors, @lat, @long
