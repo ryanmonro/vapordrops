@@ -1,8 +1,8 @@
      
 require 'sinatra'
-require 'pry'
+# require 'pry'
 require 'soda/client'
-require 'sinatra/reloader'
+# require 'sinatra/reloader'
 require_relative 'models/sensor'
 
 def melbourne_soda address, query
