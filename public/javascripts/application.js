@@ -15,4 +15,10 @@ function setPosition(position) {
   document.querySelector("#longbox").value = deviceLong;
 }
 
+var date = new Date();
+var day = date.getDay();
+var hour = date.getHours();
+document.querySelector("#daybox").value = day;
+document.querySelector("#timebox").value = hour;
+
 getLocation();

@@ -1,7 +1,7 @@
      
 require 'sinatra'
-# require 'pry'
 require 'soda/client'
+# require 'pry'
 # require 'sinatra/reloader'
 require_relative 'models/sensor'
 
@@ -93,8 +93,11 @@ get '/' do
     time = params[:time]
   end
   if params[:day] && params[:day] != ""
-    day = params[:day]
+    day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][params[:day].to_i]
   end
+
+
+
   if params[:month] && params[:month] != ""
     month = params[:month]
   end

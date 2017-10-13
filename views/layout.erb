@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Material Design Lite</title>
+    <title>Melbourne Pedestrian Congestion</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -32,9 +32,6 @@
    <!--  <link rel="stylesheet" href="$$hosted_libs_prefix$$/$$version$$/material.grey-orange.min.css"> -->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-orange.min.css">
     <link rel="stylesheet" href="/stylesheets/main.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.js"></script>
-    <script src="/javascripts/application.js"></script>
     
     <style>
     #view-source {
@@ -88,16 +85,15 @@
     border-radius: 3px;
 }
 .form-style-7 li:last-child{
-    border:none;
     margin-bottom: 0px;
     text-align: center;
 }
 .form-style-7 li > label{
     display: block;
-    float: left;
+    margin: 0 auto;
     margin-top: -19px;
     background: #FFFFFF;
-    height: 14px;
+    height: 20px;
     padding: 2px 5px 2px 5px;
     color: #B9B9B9;
     font-size: 14px;
@@ -175,7 +171,9 @@
 <body>
             <div class="mdl-card__media mdl-color-text--grey-50" style="height: 13%;">
               <div style="padding: 15px;">
-                <strong style="font-size: 2em;">Melbourne Congestion Map</strong>
+                <a href="/" style="color: white; text-decoration: none;">
+                <strong style="font-size: 2em;">Melbourne Pedestrian Congestion</strong>
+                </a>
               </div>
             </div>
 
@@ -185,47 +183,71 @@
           <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
              <%= yield %>
           </div>
-          <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
+          <div class="something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop" style="background-color: none;">
              <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
-<!--                    <form action="/" method="get">
-                       <label for="">Time</label>
-                       <p><input type="text" name="time" value=""></p>
-                       <label for="">Day</label>
-                       <p><input type="text" name="day" value=""></p>
-                       <label for="">Lat</label>
-                       <p><input type="text" name="lat" value=""></p>
-                       <label for="">Long</label>
-                       <p><input type="text" name="long" value=""></p>
-                       <button>Submit</button>
-                    </form>
- -->
-                       <form class="form-style-7" action="/" method="get">
-                      <ul>
-                      <li>
-                          <label for="">Time</label>
-                          <input type="text" name="time" value="">
-                          <span>Enter the time of day</span>
-                      </li>
-                      <li>
-                          <label for="">Day</label>
-                          <input type="text" name="day" value="">
-                          <span>Enter the day of the week</span>
-                      </li>
-                      <li>
-                          <label for="url">Latitude</label>
-                          <input type="text" id="latbox" name="lat" value="">
-                          <span>Enter the locations latitude coordinates</span>
-                      </li>
-                      <li>
-                          <label for="url">Longitude</label>
-                          <input type="text" id="longbox" name="long" value="">
-                          <span>Enter the locations longitude coordinates</span>
-                      </li>
-                      <li>
-                          <input type="submit" value="Send This" >
-                      </li>
-                      </ul>
-                      </form>
+            <form class="form-style-7" action="/" method="get">
+            <ul>
+            <li>
+              <!-- <label for="">Time</label> -->
+              <select name="time" id="timebox">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+              </select>
+
+              <!-- <input type="text" name="time" id="timebox" value=""> -->
+              <span>Enter the time of day</span>
+            </li>
+            <li>
+              <!-- <label for="">Day</label> -->
+              <select id="daybox" name="day">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+              <!-- <input type="text" id="daybox" name="day" value=""> -->
+              <span>Enter the day of the week</span>
+            </li>
+            <li>
+              <!-- <label for="url">Latitude</label> -->
+              <input type="text" id="latbox" name="lat" value="">
+              <span>Enter the location's latitude</span>
+            </li>
+            <li>
+              <!-- <label for="url">Longitude</label> -->
+              <input type="text" id="longbox" name="long" value="">
+              <span>Enter the location's longitude</span>
+            </li>
+            <li>
+              <input type="submit" value="Update Map" >
+            </li>
+            </ul>
+            </form>
           </div>
 
         </div>
@@ -251,7 +273,9 @@
       </main>
       <div class="mdl-layout__obfuscator"></div>
     </div>
-
+  
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.js"></script>
+  <script src="/javascripts/application.js"></script>
   </body>
 </html>
