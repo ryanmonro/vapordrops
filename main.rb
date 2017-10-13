@@ -72,7 +72,7 @@ end
 
 def sort_by_proximity sensors, lat, long
   sorted_results = sensors.sort_by { |k, v| proximity v.lat.to_f, v.long.to_f, lat.to_f, long.to_f }
-  return sorted_results
+  return sorted_results[0..5]
 end
 
 def proximity lat1, long1, lat2, long2
@@ -83,6 +83,8 @@ get '/' do
   # General Assembly location for testing
   ga_lat = '-37.818624299999996'
   ga_long = '144.9593399'
+  @lat = -37.819
+  @long = 144.968
   time = 19
   day = "Monday"
   month = "August"
@@ -104,9 +106,9 @@ get '/' do
   # long = $ga_long
   # lat = $ga_lat
   if params[:lat] && params[:long]
-    lat = params[:lat]
-    long = params[:long]
-    @results = sort_by_proximity sensors, lat, long
+    @lat = params[:lat]
+    @long = params[:long]
+    @results = sort_by_proximity sensors, @lat, @long
   end
   erb :map
 end

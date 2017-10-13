@@ -1,23 +1,32 @@
 <div id="map"></div>
     <script>
-      var makePin = function(lat, long, colour, label, id) {
-        var pin = new google.maps.Marker({
-              position: {lat: lat, lng: long},
-              icon: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7C" + colour
-              // label: label
-              });
-        pin.addListener('click', function(){
-          console.log(id)
-        });
-        return pin;
-      };
+
+
 
       function initMap() {
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
-          center: {lat: -37.819, lng:144.968 }
+          center: {lat: <%= @lat %>, lng:<%= @long %> }
         });
+
+        var makePin = function(lat, long, colour, label, id) {
+          var pin = new google.maps.Marker({
+                position: {lat: lat, lng: long},
+                icon: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2%7C" + colour
+                // label: label
+                });
+          pin.addListener('click', function(){
+            console.log(id);
+            // var infowindow = new google.maps.InfoWindow({
+            //   content: "<h2>" + id + "</h2>"
+            // });
+            // infowindow.open(map, pin);
+
+            window.location.href = "/sensor/" + id;
+          });
+          return pin;
+        };
 
         // Add some markers to the map.
 
@@ -32,6 +41,13 @@
         markers.forEach(function(marker){
             marker.setMap(map);
         })
+
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < markers.length; i++) {
+          bounds.extend(markers[i].getPosition());
+        }
+
+        map.fitBounds(bounds);
       }
 
     </script>
