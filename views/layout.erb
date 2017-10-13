@@ -9,7 +9,7 @@
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="/images/touch/chrome-touch-icon-192x192.png">
+    <link rel="icon" sizes="192x192" href="/images/drop.png">
 
     <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -183,8 +183,19 @@
           </div>
           <div class="something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop" style="background-color: none;">
             <div class="mdl-card__media mdl-color-text--grey-600">
+
             <form class="form-style-7" action="/" method="get">
             <ul>
+            <li>
+              <!-- <label for="url">Latitude</label> -->
+              <input type="text" id="latbox" name="lat" value="">
+              <span>Enter the location's latitude</span>
+            </li>
+            <li>
+              <!-- <label for="url">Longitude</label> -->
+              <input type="text" id="longbox" name="long" value="">
+              <span>Enter the location's longitude</span>
+            </li>
             <li>
               <!-- <label for="">Time</label> -->
               <select name="time" id="timebox">
@@ -230,16 +241,6 @@
               </select>
               <!-- <input type="text" id="daybox" name="day" value=""> -->
               <span>Enter the day of the week</span>
-            </li>
-            <li>
-              <!-- <label for="url">Latitude</label> -->
-              <input type="text" id="latbox" name="lat" value="">
-              <span>Enter the location's latitude</span>
-            </li>
-            <li>
-              <!-- <label for="url">Longitude</label> -->
-              <input type="text" id="longbox" name="long" value="">
-              <span>Enter the location's longitude</span>
             </li>
             <li>
               <input type="submit" value="Update Map" >
