@@ -19,11 +19,10 @@ def get_locations
   arr
 end
 
-def fetch_sensor_for_hdmy sensor_id, time, day, month, year
+def fetch_sensor_for_hdmy sensor_id, day, month, year
   melbourne_soda("mxb8-wn4w", {:$limit => 5000, 
     :sensor_id => sensor_id,
     :year => year,
-    :time => time,
     :day => day,
     :month => month
     })
@@ -61,7 +60,9 @@ def get_traffic time, day, month, year
 end
 
 def get_sensor id, day, month, year
-  locations = get_locations
+  # locations = get_locations
+
+  fetch_sensor_for_hdmy id, day, month, year
 end
 
 def sort_by_average sensors
@@ -86,16 +87,16 @@ get '/' do
   day = "Monday"
   month = "August"
   year = 2017
-  if params[:time]
+  if params[:time] && params[:time] != ""
     time = params[:time]
   end
-  if params[:day]
+  if params[:day] && params[:day] != ""
     day = params[:day]
   end
-  if params[:month]
+  if params[:month] && params[:month] != ""
     month = params[:month]
   end
-  if params[:year]
+  if params[:year] && params[:year] != ""
     year = params[:year]
   end
   sensors = get_traffic time, day, month, year
@@ -111,9 +112,17 @@ get '/' do
 end
 
 get '/sensor/:id' do
-  
-
-
+  day = "Thursday"
+  month = "August"
+  year = 2017
+  locations = get_locations
+  @location = locations[params[:id].to_i].sensorloc
+  sensors = get_sensor params[:id], day, month, year
+  @results = []
+  sensors.each do |s|
+    @results[s.time.to_i] = s.qv_market_peel_st
+  end
+  erb :sensor
 end
 
 
